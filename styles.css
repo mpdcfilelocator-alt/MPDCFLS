@@ -1140,6 +1140,11 @@ html.dark-mode .search-box {
   .reminder {
     display: none !important;
   }
+
+  /* Hide edit, delete, and borrow buttons from results in mobile mode */
+  .file-actions {
+    display: none !important;
+  }
 }
 
 /* ===== Utility Classes ===== */
