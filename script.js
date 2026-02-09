@@ -592,9 +592,17 @@ async function deleteFile(id) {
   files = files.filter(f => f.id !== id);
   await saveFiles(files);
   
-  const query = document.getElementById('searchBar').value;
-  searchFiles(query, 'results');
-  searchFiles(query, 'results-main');
+  // Refresh search results - use the current search query from both possible search bars
+  const query = document.getElementById('searchBar') ? document.getElementById('searchBar').value : '';
+  if (query || document.getElementById('results').innerHTML) {
+    searchFiles(query, 'results');
+  }
+  
+  const query2 = document.getElementById('searchBar-main') ? document.getElementById('searchBar-main').value : '';
+  if (query2 || document.getElementById('results-main').innerHTML) {
+    searchFiles(query2, 'results-main');
+  }
+  
   displayAddStatus('✓ File deleted successfully!', 'success');
 }
 
@@ -728,15 +736,23 @@ async function importFiles() {
 function setupEventListeners() {
   const searchHero = document.getElementById('searchBar');
   if (searchHero) {
+    let searchTimeout;
     searchHero.addEventListener('input', (e) => {
-      searchFiles(e.target.value, 'results');
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        searchFiles(e.target.value, 'results');
+      }, 300);
     });
   }
 
   const searchMain = document.getElementById('searchBar-main');
   if (searchMain) {
+    let searchTimeout;
     searchMain.addEventListener('input', (e) => {
-      searchFiles(e.target.value, 'results-main');
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        searchFiles(e.target.value, 'results-main');
+      }, 300);
     });
   }
 
