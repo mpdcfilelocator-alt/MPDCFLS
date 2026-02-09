@@ -386,7 +386,7 @@ html.dark-mode .nav-link {
 }
 
 .hero-title {
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 800;
   color: white;
   margin-bottom: 1rem;
@@ -1112,6 +1112,33 @@ html.dark-mode .search-box {
 
   .navbar-brand i {
     font-size: 1.5rem;
+  }
+
+  /* Hide navbar nav links and buttons on cellphone, only show title and import button */
+  .navbar-nav {
+    display: none !important;
+  }
+
+  .navbar-controls button:not(#import-header-btn),
+  .navbar-controls #signin-btn,
+  .navbar-controls #change-account-btn,
+  .navbar-controls #signout-header-btn,
+  .navbar-controls #theme-toggle {
+    display: none !important;
+  }
+
+  /* Keep only the import button visible */
+  .navbar-controls #import-header-btn {
+    display: inline-block !important;
+  }
+
+  /* Hide workers box and reminder on mobile */
+  .workers-box {
+    display: none !important;
+  }
+
+  .reminder {
+    display: none !important;
   }
 }
 
