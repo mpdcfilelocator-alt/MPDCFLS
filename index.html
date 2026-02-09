@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MPDC File Locator</title>
+<title>Office of Municipal Planning and Development Coordinator File Locator</title>
 
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -208,9 +208,14 @@
   </div>
 
   <!-- Reminder note (right side) -->
-  <div class="reminder" aria-label="Reminder note" style="position: fixed; top: 100px; right: 12px; width: 300px; background#:f7f7f7; border:1px solid #ddd; padding:10px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.06); z-index:40;">
-    <h4 style="margin:0 0 8px 0; font-size:14px;">Quick Reminders</h4>
-    <ul style="padding-left:18px;margin:6px 0 0 0">
+  <div class="reminder" aria-label="Reminder note" style="position: fixed; top: 100px; right: 12px; width: 300px; background:#ffffff !important; border:1px solid #ddd; padding:10px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.06); z-index:40;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <h4 style="margin:0; font-size:14px;">Quick Reminders</h4>
+      <button id="minimize-reminder-btn" style="background:none; border:none; cursor:pointer; font-size:16px; padding:0; color:#666;" title="Minimize reminder">
+        <i class="fas fa-minus"></i>
+      </button>
+    </div>
+    <ul id="reminder-content" style="padding-left:18px;margin:6px 0 0 0">
       <li>Keep files organized and updated.</li>
       <li>Always return borrowed files to their location.</li>
       <li>Update file info after changes.</li>
@@ -223,7 +228,7 @@
         <div class="navbar-brand">
             <img src="https://raw.githubusercontent.com/MathEase07/MPDC-file-locator/main/rw.png" alt="Logo" style="height: 30px; width: auto; margin-right: 10px; object-fit: contain;">
             
-         <font size="10">OMPDC File Locator </font>
+            <span>OMPDC File Tracker</span>
         </div>
         <nav class="navbar-nav">
             <a href="#hero" class="nav-link" data-section="hero">Home</a>
@@ -249,7 +254,7 @@
 <section id="hero" class="view-section hero-section active" style="background-image: url('https://raw.githubusercontent.com/MathEase07/FileLocator/main/pu.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
     <div class="hero-background"></div>
     <div class="hero-content">
-        <h3 class="hero-title">Office of Municipal Planning and Development Coordinator File Locator</h3>
+        <h1 class="hero-title">Office of Municipal Planning and Development Coordinator File Locator</h1>
         <p class="hero-subtitle">Search, Locate, and Retrieve your files efficiently.</p>
         <div class="search-container">
             <div class="search-wrapper">
@@ -962,14 +967,14 @@ Overall, it helps streamline file management and improve digital workflow effici
                     const bg = navStyle.backgroundColor || 'rgba(30,30,30,0.95)';
                     workers.style.background = bg;
                     workers.style.borderColor = navStyle.borderColor || 'rgba(0,0,0,0.3)';
-                    reminder.style.background = bg;
-                    reminder.style.borderColor = navStyle.borderColor || 'rgba(0,0,0,0.3)';
+                    reminder.style.setProperty('background', '#ffffff', 'important');
+                    reminder.style.borderColor = '#ddd';
                 } else {
                     // translucent white to show hero background
                     workers.style.background = 'rgba(255,255,255,0.92)';
                     workers.style.borderColor = '#ddd';
-                    reminder.style.background = 'rgba(255,250,200,0.95)';
-                    reminder.style.borderColor = '#f0e68c';
+                    reminder.style.setProperty('background', '#ffffff', 'important');
+                    reminder.style.borderColor = '#ddd';
                 }
             }
 
@@ -983,7 +988,36 @@ Overall, it helps streamline file management and improve digital workflow effici
         })();
         </script>
 
-
-
-
+        <script>
+        // Minimize/expand button functionality for reminder
+        document.addEventListener('DOMContentLoaded', function(){
+            const reminderBtn = document.getElementById('minimize-reminder-btn');
+            const reminderContent = document.getElementById('reminder-content');
+            const reminder = document.querySelector('.reminder');
+            
+            if (!reminderBtn || !reminderContent || !reminder) return;
+            
+            let isMinimized = localStorage.getItem('reminderMinimized') === 'true';
+            
+            function updateMinimizeState() {
+                if (isMinimized) {
+                    reminderContent.style.display = 'none';
+                    reminderBtn.innerHTML = '<i class="fas fa-plus"></i>';
+                    reminderBtn.title = 'Expand reminder';
+                } else {
+                    reminderContent.style.display = 'block';
+                    reminderBtn.innerHTML = '<i class="fas fa-minus"></i>';
+                    reminderBtn.title = 'Minimize reminder';
+                }
+            }
+            
+            reminderBtn.addEventListener('click', function(){
+                isMinimized = !isMinimized;
+                localStorage.setItem('reminderMinimized', isMinimized);
+                updateMinimizeState();
+            });
+            
+            updateMinimizeState();
+        });
+        </script>
 
